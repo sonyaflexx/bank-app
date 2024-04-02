@@ -1,9 +1,9 @@
 import { Controller } from 'react-hook-form';
 
-export default function CardNumberInput({ control }) {
+export default function CardNumberInput({ control, ...props }) {
     return (
         <label className="w-full">
-            <p>Номер карты</p>
+            <p>{props.label}</p>
             <Controller
                 name="cardNumber"
                 control={control}
@@ -20,6 +20,16 @@ export default function CardNumberInput({ control }) {
                         }}
                     />
                 )}
+                rules={{
+                    validate: {
+                      required: (value) => {
+                        if (value === "SomeValue") return 'Some Message';
+                        if (!value) return '*Required';
+                      }
+                    },
+                    maxLength: 19,
+                    minLength: 19,
+                  }}
             />
         </label>
     );

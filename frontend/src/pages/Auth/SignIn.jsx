@@ -7,7 +7,7 @@ import Button from "../../components/buttons/Button";
 import Header from "../../components/Header";
 
 export default function SignIn() {
-    const { register, handleSubmit, control } = useForm();
+    const { register, handleSubmit, control, formState: { errors } } = useForm();
     
     const submit = data => {
         console.log(data);
@@ -21,8 +21,8 @@ export default function SignIn() {
                 className="w-full px-12 flex flex-col items-center gap-4"
             >
                 <CardNumberInput 
-                    register={register}
                     control={control}
+                    label="Номер карты"
                 />
                 <AuthInput 
                     label="Пароль"
@@ -30,6 +30,8 @@ export default function SignIn() {
                     name="password"
                     placeholder="Введите пароль..."
                     register={register}
+                    required={true}
+                    error={errors.password}
                 />
                 <Button content="Войти"/>
             </form>

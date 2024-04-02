@@ -6,9 +6,9 @@ import Button from "../../components/buttons/Button";
 import Header from "../../components/Header";
 
 export default function SignIn() {
-    const { register, handleSubmit, control } = useForm();
-    
-    const submit = data => {
+    const { register, handleSubmit, control, formState: { errors } } = useForm();
+
+    const onSubmit = data => {
         console.log(data);
     }
 
@@ -16,7 +16,7 @@ export default function SignIn() {
         <div className="flex items-center flex-col gap-1 bg-white w-full mx-20 pt-5 pb-8 rounded-3xl shadow-xl">
             <Header title="Регистрация" />
             <form 
-                onSubmit={handleSubmit(submit)}
+                onSubmit={handleSubmit(onSubmit)}
                 className="w-full px-12 flex flex-col items-center gap-4"
             >
                 <AuthInput 
@@ -25,6 +25,8 @@ export default function SignIn() {
                     name="firstname"
                     placeholder="Введите ваше имя..."
                     register={register}
+                    required={true}
+                    error={errors.firstname}
                 />
                 <AuthInput 
                     label="Фамилия"
@@ -32,6 +34,8 @@ export default function SignIn() {
                     name="lastname"
                     placeholder="Введите вашу фамилию..."
                     register={register}
+                    required={true}
+                    error={errors.lastname}
                 />
                 <AuthInput 
                     label="Пароль"
@@ -39,13 +43,8 @@ export default function SignIn() {
                     name="password"
                     placeholder="Придумайте пароль..."
                     register={register}
-                />
-                <AuthInput 
-                    label="Подтвердите пароль"
-                    type="password"
-                    name="password_repeat"
-                    placeholder="Введите пароль еще раз..."
-                    register={register}
+                    required={true}
+                    error={errors.password}
                 />
                 <Button content="Создать карту"/>
             </form>
