@@ -5,6 +5,7 @@ import Header from "../components/Header";
 import Button from "../components/buttons/Button";
 import MoneyInput from "../components/inputs/MoneyInput";
 import BackButton from "../components/buttons/BackButton";
+import Loading from "../components/Loading";
 
 export default function DispensePage() {
     const { control, handleSubmit, formState: { errors } } = useForm();
@@ -25,6 +26,7 @@ export default function DispensePage() {
                 <MoneyInput control={control} />
                 <Button content="Снять"/>
             </form>
+            <Loading />
         </div>
     );
 }

@@ -1,23 +1,32 @@
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useContext } from "react";
+import { Navigate } from "react-router-dom";
 
 import CardNumberInput from "../../components/inputs/CardNumberInput";
 import AuthInput from "../../components/inputs/AuthInput";
 import Button from "../../components/buttons/Button";
 import Header from "../../components/Header";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function SignIn() {
     const { register, handleSubmit, control, formState: { errors } } = useForm();
+    const { login, isLoggedIn } = useContext(AuthContext);
     
-    const submit = data => {
-        console.log(data);
+    const onSubmit = async (event) => {
+        const jwtToken = "123123123"; // тут потом от сервера будет
+        login(jwtToken);
+      };
+
+    if (isLoggedIn) {
+        return <Navigate to="/" />;
     }
 
     return (
         <div className="flex items-center flex-col gap-1 bg-white w-full mx-20 pt-5 pb-8 rounded-3xl shadow-xl">
             <Header title="Авторизация" />
             <form 
-                onSubmit={handleSubmit(submit)}
+                onSubmit={handleSubmit(onSubmit)}
                 className="w-full px-12 flex flex-col items-center gap-4"
             >
                 <CardNumberInput 

@@ -5,21 +5,25 @@ import Home from "./pages/Home";
 import DepositPage from "./pages/DepositPage";
 import DispensePage from "./pages/DispensePage";
 import TransferPage from "./pages/TransferPage";
+import { AuthProvider } from "./context/AuthContext";
+import RouteGuard from "./RouteGuard";
 
 export default function App() {
 
   return (
-    <Router>
-        <Routes>
-            <Route path="/sign-in" element={<SignIn />} />
-            <Route path="/sign-up" element={<SignUp />} />
+    <AuthProvider>
+      <Router>
+          <Routes>
+              <Route path="/sign-in" element={<SignIn />} />
+              <Route path="/sign-up" element={<SignUp />} />
 
-            <Route path="/" element={<Home />} />
-            <Route path="/deposit" element={<DepositPage />} />
-            <Route path="/dispense" element={<DispensePage />} />
-            <Route path="/transfer" element={<TransferPage />} />
-        </Routes>
-    </Router>
+              <Route path="/" element={<RouteGuard><Home /></RouteGuard>} />
+              <Route path="/deposit" element={<RouteGuard><DepositPage /></RouteGuard>} />
+              <Route path="/dispense" element={<RouteGuard><DispensePage /></RouteGuard>} />
+              <Route path="/transfer" element={<RouteGuard><TransferPage /></RouteGuard>} />
+          </Routes>
+      </Router>
+    </AuthProvider>
   );
 
 }
