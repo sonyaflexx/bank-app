@@ -31,6 +31,7 @@ export default function SignIn() {
             >
                 <CardNumberInput 
                     control={control}
+                    error={errors.cardNumber}
                     label="Номер карты"
                 />
                 <AuthInput 

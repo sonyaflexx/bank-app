@@ -1,9 +1,17 @@
 import { Controller } from 'react-hook-form';
 
-export default function CardNumberInput({ control, ...props }) {
+export default function CardNumberInput({ control, error, ...props }) {
     return (
         <label className="w-full">
-            <p>{props.label}</p>
+            <div className="flex gap-3 items-center">
+                <p>{props.label}</p>
+                {error && error.type === "required" && (
+                    <span className="text-red text-sm">Обязательное поле!</span>
+                )}
+                {error && error.type === "minLength" || error && error.type === "maxLength" && (
+                    <span className="text-red text-sm">Неверный формат!</span>
+                )}
+            </div>
             <Controller
                 name="cardNumber"
                 control={control}
@@ -22,13 +30,22 @@ export default function CardNumberInput({ control, ...props }) {
                 )}
                 rules={{
                     validate: {
-                      required: (value) => {
-                        if (value === "SomeValue") return 'Some Message';
-                        if (!value) return '*Required';
+                        required: (value) => {
+                          if (!value) {
+                            return 'Поле обязательно для заполнения';
+                          }
+                        },
+                        maxLength: (value) => {
+                          if (value.length != 19) {
+                            return 'Не соответствует формату';
+                          }
+                        },
+                        minLength: (value) => {
+                          if (value.length < 19) {
+                            return ('Не соответствует формату');
+                          }
+                        }
                       }
-                    },
-                    maxLength: 19,
-                    minLength: 19,
                   }}
             />
         </label>

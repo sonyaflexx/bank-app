@@ -25,11 +25,13 @@ export default function TransferPage() {
                 <p className="font-medium w-full">Введите номер карты, на которую желаете перевести средства</p>
                 <CardNumberInput 
                     control={control}
+                    error={errors.cardNumber}
                 />
 
                 <p className="font-medium w-full">Введите сумму, которую желаете перевести</p>
                 <MoneyInput 
                     control={control}
+                    error={errors.amountMoney}
                 />
 
                 <Button content="Перевести"/>

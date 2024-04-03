@@ -1,18 +1,13 @@
 import { Controller } from 'react-hook-form';
-import { useState } from 'react';
 
-export default function CardNumberInput({ control }) {
+import Alert from '@mui/material/Alert';
 
-    const [width, setWidth] = useState(1);
-  
-    const changeHandler = value => {
-        if (value.length < 2) {
-            return
-        } 
-        setWidth(value.length);
-    };
-
+export default function MoneyInput({ control, error }) {
     return (
+    <>
+        {error && error.type === "required" && (
+            <Alert variant="filled" severity="error" className='fixed top-10'>Вы не можете проводить операции с 0₽.</Alert>
+        )}
         <label className="flex justify-center items-center text-4xl font-semibold text-green-50 bg-gray-20 py-5 px-7 rounded-full">
             <Controller
                 name="amountMoney"
@@ -36,13 +31,13 @@ export default function CardNumberInput({ control }) {
                 rules={{
                     validate: {
                       required: (value) => {
-                        if (!value) return '*Required';
+                        if (!value || value === '0') return '*Required';
                       }
                     },
-                    minLength: 1,
                   }}
             />
             <div>₽</div>
         </label>
+    </>
     );
 }
