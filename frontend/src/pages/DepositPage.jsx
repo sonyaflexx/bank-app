@@ -22,7 +22,7 @@ export default function DepositPage() {
                 className="w-full px-12 flex flex-col items-center gap-7"
             >
                 <p className="font-medium">Введите сумму, на которую желаете пополнить счёт</p>
-                <MoneyInput control={control} />
+                <MoneyInput control={control} error={errors.amountMoney} />
                 <Button content="Пополнить"/>
             </form>
         </div>

@@ -23,7 +23,7 @@ export default function DispensePage() {
                 className="w-full px-12 flex flex-col items-center gap-7"
             >
                 <p className="font-medium">Введите сумму, которую желаете снять со счёта</p>
-                <MoneyInput control={control} />
+                <MoneyInput control={control} error={errors.amountMoney} />
                 <Button content="Снять"/>
             </form>
             <Loading />
