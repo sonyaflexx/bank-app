@@ -18,11 +18,11 @@ export default function Home() {
                     </div>
                 </div>
                 <div className="flex-1 py-10 flex flex-wrap content-between justify-center gap-7">
-                    <HomeButton href="/sign-in" text="Узнать счёт" icon={<HiOutlineBanknotes />}/>
+                    <HomeButton href="/balance" text="Узнать счёт" icon={<HiOutlineBanknotes />}/>
                     <HomeButton href="/deposit" text="Внести" icon={<RxPinTop />}/>
                     <HomeButton href="/dispense" text="Снять" icon={<RxPinBottom />} />
                     <HomeButton href="/transfer" text="Перевести" icon={<FaMoneyBillTransfer />}/>
-                    <HomeButton href="/sign-in" text="Оплатить услуги" icon={<MdHomeRepairService />}/>
+                    <HomeButton href="/payments" text="Оплатить услуги" icon={<MdHomeRepairService />}/>
                 </div>
             </div>
         </>

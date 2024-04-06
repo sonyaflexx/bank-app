@@ -26,14 +26,18 @@ module.exports = {
         50: "#00D254",
         100: "#00D254",
         150: "#00D655",
+        180: "#00CA51",
         200: "#00983D",
       },
       red: "#BC0000",
+      yellow: "#DED61A",
     },
     borderRadius: {
       'full': '9999px',
       '3xl': '90px',
       '2xl': '60px',
+      'lg': '40px',
+      'md': '20px',
     },
   },
 }

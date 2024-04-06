@@ -16,8 +16,7 @@ export default function TransferPage() {
 
     return (
         <div className=" relative flex items-center flex-col gap-1 bg-white w-full mx-20 pt-5 pb-8 rounded-2xl shadow-xl">
-            <BackButton href="/" />
-            <Header title="Перевод средств" />
+            <Header title="Перевод средств" backHref="/" />
             <form 
                 onSubmit={handleSubmit(submit)}
                 className="w-full px-12 flex flex-col items-center gap-4"

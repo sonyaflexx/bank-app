@@ -20,6 +20,7 @@ export default function CardNumberInput({ control, error, ...props }) {
                         {...field}
                         type="text"
                         maxLength={19}
+                        pattern="[0-9]{4} [0-9]{4} [0-9]{4} [0-9]{4}"
                         placeholder="0000 0000 0000 0000"
                         className="w-full bg-gray-50 text-2xl placeholder-gray-100 font-medium text-gray-300 outline-none border-solid border-4 border-gray-100 px-5 py-2 rounded-full"
                         onChange={(e) => {

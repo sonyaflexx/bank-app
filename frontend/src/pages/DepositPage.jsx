@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import Button from "../components/buttons/Button";
 import MoneyInput from "../components/inputs/MoneyInput";
-import BackButton from "../components/buttons/BackButton";
 
 export default function DepositPage() {
     const { control, handleSubmit, formState: { errors } } = useForm();
@@ -15,8 +14,7 @@ export default function DepositPage() {
 
     return (
         <div className="relative flex items-center flex-col gap-1 bg-white w-full mx-20 pt-5 pb-8 rounded-2xl shadow-xl">
-            <BackButton href="/" />
-            <Header title="Внесение средств" />
+            <Header title="Внесение средств" backHref="/" />
             <form 
                 onSubmit={handleSubmit(onSubmit)}
                 className="w-full px-12 flex flex-col items-center gap-7"
