@@ -2,7 +2,7 @@ import { FaArrowAltCircleLeft, FaArrowAltCircleRight } from "react-icons/fa";
 
 export default function HistoryItem(props) {
     return (
-        <div className="w-full flex gap-3 p-3 items-center hover:cursor-pointer hover:bg-gray-20 active:scale-95 transition-all duration-100 rounded-md">
+        <div className="w-full flex gap-3 p-3 items-center rounded-md"> { /* На будущее: hover:cursor-pointer hover:bg-gray-20 active:scale-95 transition-all duration-100 */ }
             <span className="text-green-200 text-5xl">
                 {props.type === "outgoing" ? <FaArrowAltCircleRight/> : <FaArrowAltCircleLeft/>}
             </span>

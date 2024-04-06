@@ -21,7 +21,7 @@ export default function PaymentsPage() {
         {
             Icon: <TbMoneybag />,
             text: "Налоги",
-            href: ""
+            href: "/payments/taxes"
         }
     ]
 

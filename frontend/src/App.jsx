@@ -11,6 +11,8 @@ import RouteGuard from "./RouteGuard";
 import PaymentsPage from "./pages/Payments/PaymentsPage";
 import MobilePage from "./pages/Payments/MobilePage";
 import InternetPage from "./pages/Payments/InternetPage";
+import TaxesPage from "./pages/Payments/TaxesPage";
+import SuccessPage from "./pages/SuccessPage";
 
 export default function App() {
 
@@ -29,6 +31,8 @@ export default function App() {
               <Route path="/payments" element={<RouteGuard><PaymentsPage /></RouteGuard>} />
               <Route path="/payments/mobile" element={<RouteGuard><MobilePage /></RouteGuard>} />
               <Route path="/payments/internet" element={<RouteGuard><InternetPage /></RouteGuard>} />
+              <Route path="/payments/taxes" element={<RouteGuard><TaxesPage /></RouteGuard>} />
+              <Route path="/success/:data" element={<RouteGuard><SuccessPage /></RouteGuard>} />
           </Routes>
       </Router>
     </AuthProvider>

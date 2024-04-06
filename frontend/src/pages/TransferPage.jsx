@@ -10,7 +10,7 @@ import MoneyInput from "../components/inputs/MoneyInput"
 export default function TransferPage() {
     const { register, handleSubmit, control, formState: { errors } } = useForm();
     
-    const submit = data => {
+    const onSubmit = data => {
         console.log(data);
     }
 
@@ -18,7 +18,7 @@ export default function TransferPage() {
         <div className=" relative flex items-center flex-col gap-1 bg-white w-full mx-20 pt-5 pb-8 rounded-2xl shadow-xl">
             <Header title="Перевод средств" backHref="/" />
             <form 
-                onSubmit={handleSubmit(submit)}
+                onSubmit={handleSubmit(onSubmit)}
                 className="w-full px-12 flex flex-col items-center gap-4"
             >
                 <p className="font-medium w-full">Введите номер карты, на которую желаете перевести средства</p>
