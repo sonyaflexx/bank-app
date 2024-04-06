@@ -1,7 +1,7 @@
 import HistoryItem from "./HistoryItem";
 
 export default function HistoryList() {
-    const transfers = [
+    const transfers = [ // TODO запрос на получение истории (массив объектов)
         {
             type: "outgoing",
             to: "0000 0000 0000 0000",
