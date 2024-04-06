@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 
@@ -6,10 +7,14 @@ import Button from "../components/buttons/Button";
 import MoneyInput from "../components/inputs/MoneyInput";
 
 export default function DepositPage() {
+    const navigate = useNavigate();
     const { control, handleSubmit, formState: { errors } } = useForm();
-
+    
     const onSubmit = data => {
-        console.log(data);
+        data.type = "deposit";
+        const dataStr = JSON.stringify(data);
+        // TODO POST запрос на пополнение
+        navigate(`/success/${encodeURIComponent(dataStr)}`)
     }
 
     return (

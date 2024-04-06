@@ -1,8 +1,11 @@
 import Header from '../components/Header';
 import { FaCheckCircle } from 'react-icons/fa';
 import { useSpring, animated } from 'react-spring';
+import { Link } from 'react-router-dom';
 
 import { useParams } from 'react-router-dom';
+
+// TODO отрефакторить
 
 export default function SuccessPage() {
     const { data } = useParams();
@@ -17,23 +20,129 @@ export default function SuccessPage() {
     return (
         <div className="relative flex items-center flex-col bg-white w-full mx-20 pt-7 pb-8 px-10 rounded-2xl shadow-xl">
             <Header title="Успешно!"/>
-            <animated.div style={springProps}>
+            <animated.div style={springProps} className="mb-9">
                 <FaCheckCircle size={60} color="green" />
             </animated.div>
 
-            {parsedData.type === "taxes" && 
-                <div>
-                    <p>В скором времени оплата поступит в ФНС!</p>
-                    <div>
-                        <p>Информация по оплате:</p>
-                        <div>
-                            <p>Уникальный идентификатор начислений: {parsedData.uin}</p>
-                            <p>Сумма оплаты: {parsedData.amountMoney}</p>
-                            <p>Информация по оплате:</p>
+                <div className="flex flex-col gap-4 w-full">
+                    <p className="font-bold">Информация по операции:</p>
+                        <div className="bg-gray-20 p-5 mt-2 rounded-md">
+                            {parsedData.type === "taxes" && 
+                                <>
+                                    <div className="flex gap-2">
+                                        <p className="font-semibold">Тип операции:</p>
+                                        <span>Оплата услуг</span>
+                                    </div>
+                                    <div className="flex gap-2">
+                                        <p className="font-semibold">Тип услуги: </p>
+                                        <span>Налоги</span>
+                                    </div>
+                                    <div className="flex gap-2">
+                                        <p className="font-semibold">УИН: </p>
+                                        <span>{parsedData.uin}</span>
+                                    </div>
+                                    <div className="flex gap-2">
+                                        <p className="font-semibold">Сумма: </p>
+                                        <span>{parsedData.amountMoney}₽</span>
+                                    </div>
+                                </>
+                            }
+
+                            {parsedData.type === "internet" && 
+                                <>
+                                    <div className="flex gap-2">
+                                        <p className="font-semibold">Тип операции:</p>
+                                        <span>Оплата услуг</span>
+                                    </div>
+                                    <div className="flex gap-2">
+                                        <p className="font-semibold">Тип услуги: </p>
+                                        <span>Домашний интернет</span>
+                                    </div>
+                                    <div className="flex gap-2">
+                                        <p className="font-semibold">Номер лицевого счета: </p>
+                                        <span>{parsedData.account}</span>
+                                    </div>
+                                    <div className="flex gap-2">
+                                        <p className="font-semibold">Оператор: </p>
+                                        <span>{parsedData.operator}</span>
+                                    </div>
+                                    <div className="flex gap-2">
+                                        <p className="font-semibold">Сумма: </p>
+                                        <span>{parsedData.amountMoney}₽</span>
+                                    </div>
+                                </>
+                            }
+
+                            {parsedData.type === "mobile" && 
+                                <>
+                                    <div className="flex gap-2">
+                                        <p className="font-semibold">Тип операции:</p>
+                                        <span>Оплата услуг</span>
+                                    </div>
+                                    <div className="flex gap-2">
+                                        <p className="font-semibold">Тип услуги: </p>
+                                        <span>Мобильная связь</span>
+                                    </div>
+                                    <div className="flex gap-2">
+                                        <p className="font-semibold">Номер телефона: </p>
+                                        <span>{parsedData.tel}</span>
+                                    </div>
+                                    <div className="flex gap-2">
+                                        <p className="font-semibold">Оператор: </p>
+                                        <span>{parsedData.operator}</span>
+                                    </div>
+                                    <div className="flex gap-2">
+                                        <p className="font-semibold">Сумма: </p>
+                                        <span>{parsedData.amountMoney}₽</span>
+                                    </div>
+                                </>
+                            }
+
+                            {parsedData.type === "transfer" && 
+                                <>
+                                    <div className="flex gap-2">
+                                        <p className="font-semibold">Тип операции: </p>
+                                        <span>Перевод</span>
+                                    </div>
+                                    <div className="flex gap-2">
+                                        <p className="font-semibold">Куда: </p>
+                                        <span>{parsedData.cardNumber}</span>
+                                    </div>
+                                    <div className="flex gap-2">
+                                        <p className="font-semibold">Сумма: </p>
+                                        <span>{parsedData.amountMoney}₽</span>
+                                    </div>
+                                </>
+                            }
+
+                            {parsedData.type === "dispense" && 
+                                <>
+                                    <div className="flex gap-2">
+                                        <p className="font-semibold">Тип операции: </p>
+                                        <span>Снятие наличных</span>
+                                    </div>
+                                    <div className="flex gap-2">
+                                        <p className="font-semibold">Сумма: </p>
+                                        <span>{parsedData.amountMoney}₽</span>
+                                    </div>
+                                </>
+                            }
+
+                            {parsedData.type === "deposit" && 
+                                <>
+                                    <div className="flex gap-2">
+                                        <p className="font-semibold">Тип операции: </p>
+                                        <span>Пополнение счёта</span>
+                                    </div>
+                                    <div className="flex gap-2">
+                                        <p className="font-semibold">Сумма: </p>
+                                        <span>{parsedData.amountMoney}₽</span>
+                                    </div>
+                                </>
+                            }
                         </div>
-                    </div>    
                 </div>
-            }
+            <Link to="/" className="mt-5 flex items-center justify-center w-1/2 h-12 bg-green-100 hover:bg-green-20 text-white text-xl font-medium rounded-full transition duration-75 active:bg-green-150 active:scale-95">На главную</Link>
         </div>
     )   
 }
