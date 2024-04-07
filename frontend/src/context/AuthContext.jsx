@@ -4,28 +4,28 @@ const AuthContext = createContext();
 
 function AuthProvider({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [jwt, setJwt] = useState(null);
+  const [token, setToken] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const storedJwt = localStorage.getItem("jwt");
-    if (storedJwt) {
+    const storedToken = localStorage.getItem("token");
+    if (storedToken) {
       setIsLoggedIn(true);
-      setJwt(storedJwt);
+      setToken(storedToken);
     }
     setIsLoading(false);
   }, []);
 
   function login(token) {
     setIsLoggedIn(true);
-    setJwt(token);
-    localStorage.setItem("jwt", token);
+    setToken(token);
+    localStorage.setItem("token", token);
   }
 
   function logout() {
     setIsLoggedIn(false);
-    setJwt(null);
-    localStorage.removeItem("jwt");
+    setToken(null);
+    localStorage.removeItem("token");
   }
 
   const authValue = {
