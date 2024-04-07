@@ -23,7 +23,6 @@ export default function SuccessPage() {
             <animated.div style={springProps} className="mb-9">
                 <FaCheckCircle size={60} color="green" />
             </animated.div>
-
                 <div className="flex flex-col gap-4 w-full">
                     <p className="font-bold">Информация по операции:</p>
                         <div className="bg-gray-20 p-5 mt-2 rounded-md">
