@@ -13,6 +13,7 @@ import MobilePage from "./pages/Payments/MobilePage";
 import InternetPage from "./pages/Payments/InternetPage";
 import TaxesPage from "./pages/Payments/TaxesPage";
 import SuccessPage from "./pages/SuccessPage";
+import SuccessSignUp from "./pages/SuccessSignUp";
 
 export default function App() {
 
@@ -22,6 +23,7 @@ export default function App() {
           <Routes>
               <Route path="/sign-in" element={<SignIn />} />
               <Route path="/sign-up" element={<SignUp />} />
+              <Route path="/sign-up/success/:response" element={<SuccessSignUp />} />
 
               <Route path="/" element={<RouteGuard><Home /></RouteGuard>} />
               <Route path="/balance" element={<RouteGuard><BalancePage /></RouteGuard>} />

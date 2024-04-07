@@ -1,15 +1,25 @@
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 import AuthInput from "../../components/inputs/AuthInput";
 import Button from "../../components/buttons/Button";
 import Header from "../../components/Header";
 
 export default function SignIn() {
-    const { register, handleSubmit, control, formState: { errors } } = useForm();
+    const navigate = useNavigate();
+    const { register, handleSubmit, control, formState: { errors }, watch } = useForm();
+    const password = watch("password", "");
 
     const onSubmit = data => {
-        console.log(data);
+        // TODO POST запрос с data на передчу на создание user и ниже его ответ засунуть туда
+        const response = {
+            cardNumber: "0000 0000 0000 0000",
+            firstname: "Имя",
+            lastname: "Фамилия"
+        }
+        const responseStr = JSON.stringify(response);
+        navigate(`/sign-up/success/${encodeURIComponent(responseStr)}`)
     }
 
     return (
@@ -45,6 +55,18 @@ export default function SignIn() {
                     register={register}
                     required={true}
                     error={errors.password}
+                />
+                <AuthInput 
+                    label="Повторите пароль"
+                    type="password"
+                    name="confirmPassword"
+                    placeholder="Повторите ваш пароль..."
+                    register={register}
+                    required={true}
+                    error={errors.confirmPassword}
+                    validate={{
+                        sameAsPassword: value => value === password || "Пароли не совпадают"
+                    }}
                 />
                 <Button content="Создать карту"/>
             </form>
