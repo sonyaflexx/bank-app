@@ -57,7 +57,7 @@ export default function SignIn() {
                     error={errors.password}
                 />
                 <AuthInput 
-                    label="Повторите пароль"
+                    label="Подтвердите пароль"
                     type="password"
                     name="confirmPassword"
                     placeholder="Повторите ваш пароль..."
