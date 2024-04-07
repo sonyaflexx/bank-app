@@ -14,7 +14,7 @@ export default function SignIn() {
     const { login, isLoggedIn } = useContext(AuthContext);
     
     const onSubmit = async (event) => {
-        const jwtToken = "123123123"; // тут потом от сервера будет
+        const jwtToken = "123123123"; // TODO запрос на генерацию JWT токена, включающего userId
         login(jwtToken);
       };
 
