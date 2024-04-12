@@ -14,8 +14,16 @@ export default function SignIn() {
     const { login, isLoggedIn } = useContext(AuthContext);
     
     const onSubmit = data => {
-        login(data);
-      };
+        let formattedData = {
+            ...data,
+            card_number: data.card_number.replaceAll(' ', '')
+        };
+        
+        formattedData.card_number = parseInt(formattedData.card_number, 10);
+        
+        console.log(formattedData);
+        login(formattedData);
+    };
 
     if (isLoggedIn) {
         return <Navigate to="/" />;
