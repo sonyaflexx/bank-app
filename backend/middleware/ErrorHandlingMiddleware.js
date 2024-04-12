@@ -1,4 +1,4 @@
-const Error = require('../error/Error')
+const Error = require('../errors/Error')
 
 module.exports = function (err, req, res, next) {
     if (err instanceof Error) {

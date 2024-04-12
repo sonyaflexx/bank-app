@@ -1,4 +1,4 @@
-const Error = require('../error/Error')
+const Error = require('../errors/Error')
 const { User } = require('../models/models')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
@@ -24,9 +24,9 @@ class UserController {
     }
 
     async signIn(req, res, next) {
-        const {cardNumber, password} = req.query
-        const user = await User.findOne({ where: {card_number: cardNumber} })
-        if (!user ) {
+        const {card_number, password} = req.query
+        const user = await User.findOne({ where: {card_number} })
+        if (!user) {
             return next(Error.Internal("Неверные данные пользователя!"))
         }
         let comparePassword = bcrypt.compareSync(password, user.password_hash)
@@ -37,12 +37,9 @@ class UserController {
         return res.json({token})
     }
 
-    async check(req, res, next) {
-        const { id } = req.query
-        if (!id) {
-            return next(Error.BadRequest('неет'))
-        }
-        res.json(id)
+    async check(req, res) {
+        const token = generateToken(req.user.card_number, req.user.firstname, req.user.lastname)
+        return res.json({token})
     }
 
     async getBalance(req, res) {

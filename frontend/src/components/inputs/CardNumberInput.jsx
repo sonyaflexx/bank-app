@@ -13,7 +13,7 @@ export default function CardNumberInput({ control, error, ...props }) {
                 )}
             </div>
             <Controller
-                name="cardNumber"
+                name="card_number"
                 control={control}
                 render={({ field }) => (
                     <input

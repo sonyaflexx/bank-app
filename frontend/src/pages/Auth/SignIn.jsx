@@ -13,9 +13,8 @@ export default function SignIn() {
     const { register, handleSubmit, control, formState: { errors } } = useForm();
     const { login, isLoggedIn } = useContext(AuthContext);
     
-    const onSubmit = async (event) => {
-        const jwtToken = "123123123"; // TODO запрос на генерацию JWT токена, включающего userId
-        login(jwtToken);
+    const onSubmit = data => {
+        login(data);
       };
 
     if (isLoggedIn) {

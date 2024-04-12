@@ -1,5 +1,5 @@
 const { Type, Transaction } = require('../models/models')
-const Error = require('../error/Error')
+const Error = require('../errors/Error')
 
 class TransactionController {
     async createTransaction(req, res, next) {

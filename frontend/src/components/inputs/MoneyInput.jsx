@@ -10,7 +10,7 @@ export default function MoneyInput({ control, error }) {
         )}
         <label className="flex justify-center items-center text-4xl font-semibold text-green-50 bg-gray-20 py-5 px-7 rounded-full">
             <Controller
-                name="amountMoney"
+                name="amount"
                 control={control}
                 render={({ field }) => (
                     <input

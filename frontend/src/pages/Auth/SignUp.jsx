@@ -7,12 +7,14 @@ import Button from "../../components/buttons/Button";
 import Header from "../../components/Header";
 
 export default function SignIn() {
+    const { registration, isLoggedIn } = useContext(AuthContext);
     const navigate = useNavigate();
     const { register, handleSubmit, control, formState: { errors }, watch } = useForm();
     const password = watch("password", "");
 
     const onSubmit = data => {
         // TODO POST запрос с data на передчу на создание user и ниже его ответ засунуть туда
+        registration(data)
         const response = {
             cardNumber: "0000 0000 0000 0000",
             firstname: "Имя",

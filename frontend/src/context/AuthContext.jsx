@@ -1,4 +1,5 @@
-import { createContext,  useState, useEffect } from "react";
+import { createContext, useState, useEffect } from "react";
+import api from "../api";
 
 const AuthContext = createContext();
 
@@ -16,10 +17,29 @@ function AuthProvider({ children }) {
     setIsLoading(false);
   }, []);
 
-  function login(token) {
-    setIsLoggedIn(true);
-    setToken(token);
-    localStorage.setItem("token", token);
+  async function registration(data) {
+    try {
+      const response = await api.post("/api/user/sign-up", data);
+      const token = response.data.token;
+      setIsLoggedIn(true);
+      setToken(token);
+      localStorage.setItem("token", token);
+      return token;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function login(data) {
+    try {
+      const response = await api.post("/api/user/sign-in", {data});
+      const token = response.data.token;
+      setIsLoggedIn(true);
+      setToken(token);
+      localStorage.setItem("token", token);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   function logout() {
