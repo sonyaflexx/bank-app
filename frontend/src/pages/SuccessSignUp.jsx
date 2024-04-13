@@ -1,5 +1,6 @@
 import Header from '../components/Header';
 import { Link } from 'react-router-dom';
+import cardFormat from '../hooks/formatCard';
 
 import { useParams } from 'react-router-dom';
 
@@ -17,7 +18,7 @@ export default function SuccessSignUp() {
                     <div className="bg-gray-20 p-5 mt-2 rounded-md">
                         <div className="flex gap-2">
                             <p className="font-semibold">Номер карты: </p>
-                            <span>{parsedResponse.cardNumber}</span>
+                            <span>{ cardFormat(parsedResponse.card_number) }</span>
                         </div>
                         <div className="flex gap-2">
                             <p className="font-semibold">Имя: </p>
@@ -29,7 +30,7 @@ export default function SuccessSignUp() {
                         </div>
                     </div>
                 </div>
-            <Link to="/sign-in" className="mt-5 flex items-center justify-center w-1/2 h-12 bg-green-100 hover:bg-green-20 text-white text-xl font-medium rounded-full transition duration-75 active:bg-green-150 active:scale-95">К авторизации</Link>
+                <Link to="/" className="mt-5 flex items-center justify-center w-1/2 h-12 bg-green-100 hover:bg-green-20 text-white text-xl font-medium rounded-full transition duration-75 active:bg-green-150 active:scale-95">Продолжить</Link>
         </div>
     )   
 }

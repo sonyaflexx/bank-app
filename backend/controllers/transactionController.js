@@ -4,7 +4,7 @@ const Error = require('../errors/Error')
 class TransactionController {
     async createTransaction(req, res, next) {
         try {
-            const {transaction_type, service_type, amount} = req.query
+            const {transaction_type, service_type, amount} = req.body
             const transaction = await Transaction.create({transaction_type, service_type, amount })
             return res.json(transaction)
         } catch (e) {

@@ -13,7 +13,7 @@ const generateToken = (card_number, firstname, lastname) => {
 
 class UserController {
     async signUp(req, res, next) {
-        const {firstname, lastname, password} = req.query
+        const {firstname, lastname, password} = req.body
         if (!firstname || !lastname || !password) {
             return next(Error.BadRequest("Некорректное имя, фамилия или пароль!"))
         }
@@ -24,14 +24,14 @@ class UserController {
     }
 
     async signIn(req, res, next) {
-        const {card_number, password} = req.query
+        const {card_number, password} = req.body
         const user = await User.findOne({ where: {card_number} })
         if (!user) {
-            return next(Error.Internal("Неверные данные пользователя!"))
+            return next(Error.Forbidden("Неверные данные пользователя!"))
         }
         let comparePassword = bcrypt.compareSync(password, user.password_hash)
         if (!comparePassword) {
-            return next(Error.Internal("Неверные данные пользователя!"))
+            return next(Error.Forbidden("Неверные данные пользователя!"))
         }
         const token = generateToken(user.card_number, user.firstname, user.lastname)
         return res.json({token})

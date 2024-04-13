@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect } from "react";
+import { jwtDecode } from "jwt-decode"
 import api from "../api";
 
 const AuthContext = createContext();
@@ -17,28 +18,29 @@ function AuthProvider({ children }) {
     setIsLoading(false);
   }, []);
 
-  async function registration(data) {
+  async function registration(req) {
     try {
-      const response = await api.post("/api/user/sign-up", data);
-      const token = response.data.token;
+      const {data} = await api.post("/api/user/sign-up", req);
+      const token = data.token;
       setIsLoggedIn(true);
       setToken(token);
       localStorage.setItem("token", token);
-      return token;
+      return jwtDecode(token);
     } catch (error) {
       console.log(error);
     }
   }
 
-  async function login(data) {
+  async function login(req) {
     try {
-      const response = await api.post("/api/user/sign-in", {data});
+      const response = await api.post("/api/user/sign-in", req);
       const token = response.data.token;
       setIsLoggedIn(true);
       setToken(token);
       localStorage.setItem("token", token);
-    } catch (error) {
-      console.log(error);
+      return token;
+    } catch (e) {
+      return (e.response);
     }
   }
 
@@ -52,6 +54,7 @@ function AuthProvider({ children }) {
     isLoggedIn,
     isLoading,
     login,
+    registration,
     logout,
   };
 

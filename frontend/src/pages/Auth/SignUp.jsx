@@ -1,27 +1,27 @@
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
 
+import { AuthContext } from "../../context/AuthContext";
 import AuthInput from "../../components/inputs/AuthInput";
 import Button from "../../components/buttons/Button";
 import Header from "../../components/Header";
 
-export default function SignIn() {
-    const { registration, isLoggedIn } = useContext(AuthContext);
+export default function SignUp() {
+    const { registration } = useContext(AuthContext);
     const navigate = useNavigate();
     const { register, handleSubmit, control, formState: { errors }, watch } = useForm();
     const password = watch("password", "");
 
-    const onSubmit = data => {
+    const onSubmit = async (data) => {
         // TODO POST запрос с data на передчу на создание user и ниже его ответ засунуть туда
-        registration(data)
-        const response = {
-            cardNumber: "0000 0000 0000 0000",
-            firstname: "Имя",
-            lastname: "Фамилия"
+        try {
+            const response = await registration(data)
+            navigate(`/sign-up/success/${encodeURIComponent(JSON.stringify(response))}`)
+        } catch (e) {
+            alert('Непредвиденная ошибка!')
         }
-        const responseStr = JSON.stringify(response);
-        navigate(`/sign-up/success/${encodeURIComponent(responseStr)}`)
     }
 
     return (
