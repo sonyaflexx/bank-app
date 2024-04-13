@@ -6,7 +6,7 @@ import DepositPage from "./pages/DepositPage";
 import DispensePage from "./pages/DispensePage";
 import TransferPage from "./pages/TransferPage";
 import BalancePage from "./pages/BalancePage";
-import { AuthProvider } from "./context/AuthContext";
+import { AuthContext, AuthProvider } from "./context/AuthContext";
 import RouteGuard from "./RouteGuard";
 import PaymentsPage from "./pages/Payments/PaymentsPage";
 import MobilePage from "./pages/Payments/MobilePage";
@@ -14,9 +14,10 @@ import InternetPage from "./pages/Payments/InternetPage";
 import TaxesPage from "./pages/Payments/TaxesPage";
 import SuccessPage from "./pages/SuccessPage";
 import SuccessSignUp from "./pages/SuccessSignUp";
+import { useContext } from "react";
+
 
 export default function App() {
-
   return (
     <AuthProvider>
       <Router>
