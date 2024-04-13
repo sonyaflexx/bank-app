@@ -5,16 +5,26 @@ import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import Button from "../components/buttons/Button";
 import MoneyInput from "../components/inputs/MoneyInput";
+import api from "../api";
+import userStore from "../store/UserStore";
 
 export default function DepositPage() {
     const navigate = useNavigate();
     const { control, handleSubmit, formState: { errors } } = useForm();
     
-    const onSubmit = data => {
-        data.type = "deposit";
-        const dataStr = JSON.stringify(data);
-        // TODO POST запрос на пополнение
-        navigate(`/success/${encodeURIComponent(dataStr)}`)
+    const onSubmit = async (data) => {
+        try {
+            data.type = "deposit";
+            data.receiver_id = userStore.user.card_number
+            const response = await api.post('api/transaction/deposit', data);
+            if (response.data.success) {
+                navigate(`/success/${encodeURIComponent(JSON.stringify(data))}`);
+            } else {
+                alert(response.data.error);
+            }
+        } catch (error) {
+            alert(error.message);
+        }
     }
 
     return (

@@ -1,4 +1,4 @@
-export default function cardFormat(card_number) {
+export default function formatCard(card_number) {
     const formattedNumber = [
         card_number.slice(0, 4),
         card_number.slice(4, 8),

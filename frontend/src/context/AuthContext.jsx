@@ -38,12 +38,18 @@ function AuthProvider({ children }) {
     }
   }
   
-  function logout() {
+  async function logout() {
     userStore.setUser(null);
     userStore.setIsLoggedIn(false);
     
     localStorage.removeItem('user');
     localStorage.removeItem('isLoggedIn');
+  }
+
+  async function checkAuth() {
+    const {data} = await api.get('/api/user/auth/')
+    localStorage.setItem('token', data.token)
+    return jwtDecode(data.token)
   }
   
   const authValue = {
@@ -51,6 +57,7 @@ function AuthProvider({ children }) {
     login,
     registration,
     logout,
+    checkAuth
   };
 
   return <AuthContext.Provider value={authValue}>{children}</AuthContext.Provider>;

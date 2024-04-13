@@ -6,9 +6,9 @@ import userStore from "./store/UserStore";
 
 const RouteGuard = observer(({ children }) => {
   const { isLoading } = useContext(AuthContext);
-  console.log(userStore.isLoggedIn, userStore.user)
+
   if (isLoading) {
-    return <></>;
+    return <>Loading...</>;
   }
 
   if (!userStore.isLoggedIn) {

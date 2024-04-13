@@ -1,8 +1,8 @@
 import Header from '../components/Header';
 import { Link } from 'react-router-dom';
-import cardFormat from '../hooks/formatCard';
 
 import { useParams } from 'react-router-dom';
+import formatCard from '../hooks/formatCard';
 
 // TODO отрефакторить
 
@@ -18,7 +18,7 @@ export default function SuccessSignUp() {
                     <div className="bg-gray-20 p-5 mt-2 rounded-md">
                         <div className="flex gap-2">
                             <p className="font-semibold">Номер карты: </p>
-                            <span>{ cardFormat(parsedResponse.card_number) }</span>
+                            <span>{ formatCard(parsedResponse.card_number) }</span>
                         </div>
                         <div className="flex gap-2">
                             <p className="font-semibold">Имя: </p>

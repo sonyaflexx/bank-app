@@ -4,10 +4,13 @@ import { RxPinTop, RxPinBottom } from "react-icons/rx";
 import { FaMoneyBillTransfer } from "react-icons/fa6";
 import { MdHomeRepairService } from "react-icons/md";
 import SignOutButton from "../components/buttons/SignOutButton";
+import userStore from "../store/UserStore";
+import formatCard from "../hooks/formatCard";
 
 export default function Home() {
-    const cardNumber = "0000 0000 0000 0000" // TODO запрос на бэк на получение номера карты
-    const name = "Имя Фамилия" // TODO Запрос на получение имени и фамилии
+    const {user} = userStore
+    const cardNumber = formatCard(user.card_number)
+    const name = [user.lastname, user.firstname].join(' ')
 
     return (
         <>

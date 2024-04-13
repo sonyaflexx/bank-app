@@ -14,10 +14,15 @@ import InternetPage from "./pages/Payments/InternetPage";
 import TaxesPage from "./pages/Payments/TaxesPage";
 import SuccessPage from "./pages/SuccessPage";
 import SuccessSignUp from "./pages/SuccessSignUp";
+import userStore from "./store/UserStore";
+import { useContext, useEffect } from "react";
+
 
 export default function App() {
+  const user = userStore.user
+  const { checkAuth } = useContext(AuthContext);
+
   return (
-    <AuthProvider>
       <Router>
           <Routes>
               <Route path="/sign-in" element={<SignIn />} />
@@ -36,7 +41,6 @@ export default function App() {
               <Route path="/success/:data" element={<RouteGuard><SuccessPage /></RouteGuard>} />
           </Routes>
       </Router>
-    </AuthProvider>
   );
 
 }

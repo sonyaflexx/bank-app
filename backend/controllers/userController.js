@@ -43,8 +43,28 @@ class UserController {
     }
 
     async getBalance(req, res) {
-
+        const { card_number } = req.query;
+        if (!card_number) {
+            return res.status(400).json({ error: "Неверный запрос" });
+        }
+        
+        try {
+            const balance = await User.findOne({
+                where: { card_number },
+                attributes: ['balance']
+            });
+            
+            if (!balance) {
+                return res.status(404).json({ error: "Пользователь не найден" });
+            }
+    
+            return res.status(200).json({ balance });
+        } catch (error) {
+            console.error('Ошибка при запросе баланса:', error);
+            return res.status(500).json({ error: "Внутренняя ошибка сервера" });
+        }
     }
+    
 
     async getHistory(req, res) {
 
