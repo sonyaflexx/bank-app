@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useState, useContext } from "react";
 import { Navigate } from "react-router-dom";
 
+import userStore from "../../store/UserStore";
 import CardNumberInput from "../../components/inputs/CardNumberInput";
 import AuthInput from "../../components/inputs/AuthInput";
 import Button from "../../components/buttons/Button";
@@ -12,7 +13,7 @@ import { Alert } from "@mui/material";
 
 export default function SignIn() {
     const { register, handleSubmit, control, formState: { errors } } = useForm();
-    const { login, isLoggedIn } = useContext(AuthContext);
+    const { login } = useContext(AuthContext);
     const [visibleAlert, setVisibleAlert]= useState(false)
     
     const onSubmit = async (data) => {
@@ -23,11 +24,17 @@ export default function SignIn() {
         
         formattedData.card_number = parseInt(formattedData.card_number, 10);
         
+        try {
             const response = await login(formattedData);
-            response.status === 403 && setVisibleAlert(true)
-        };
+            if (response && response.status === 403) {
+              setVisibleAlert(true);
+            }
+        } catch (e) {
+            alert("Непредвиденная ошибка!");
+        }
+    };
 
-    if (isLoggedIn) {
+    if (userStore.isLoggedIn) {
         return <Navigate to="/" />;
     }
 

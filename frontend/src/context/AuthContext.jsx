@@ -1,30 +1,25 @@
-import { createContext, useState, useEffect } from "react";
-import { jwtDecode } from "jwt-decode"
-import api from "../api";
+import React, { createContext, useState, useEffect, useContext } from 'react';
+import { makeObservable, observable, action } from 'mobx';
+import { observer } from 'mobx-react';
+import userStore from '../store/UserStore';
+import api from '../api/index';
+import { jwtDecode } from 'jwt-decode'
 
 const AuthContext = createContext();
 
 function AuthProvider({ children }) {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [token, setToken] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const storedToken = localStorage.getItem("token");
-    if (storedToken) {
-      setIsLoggedIn(true);
-      setToken(storedToken);
-    }
     setIsLoading(false);
   }, []);
 
   async function registration(req) {
     try {
-      const {data} = await api.post("/api/user/sign-up", req);
+      const { data } = await api.post("/api/user/sign-up", req);
       const token = data.token;
-      setIsLoggedIn(true);
-      setToken(token);
-      localStorage.setItem("token", token);
+      userStore.setUser(jwtDecode(token));
+      userStore.setIsLoggedIn(true);
       return jwtDecode(token);
     } catch (error) {
       console.log(error);
@@ -35,23 +30,23 @@ function AuthProvider({ children }) {
     try {
       const response = await api.post("/api/user/sign-in", req);
       const token = response.data.token;
-      setIsLoggedIn(true);
-      setToken(token);
-      localStorage.setItem("token", token);
+      userStore.setUser(jwtDecode(token));
+      userStore.setIsLoggedIn(true);
       return token;
     } catch (e) {
       return (e.response);
     }
   }
-
+  
   function logout() {
-    setIsLoggedIn(false);
-    setToken(null);
-    localStorage.removeItem("token");
+    userStore.setUser(null);
+    userStore.setIsLoggedIn(false);
+    
+    localStorage.removeItem('user');
+    localStorage.removeItem('isLoggedIn');
   }
-
+  
   const authValue = {
-    isLoggedIn,
     isLoading,
     login,
     registration,

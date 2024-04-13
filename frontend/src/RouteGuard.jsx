@@ -1,19 +1,21 @@
+import { observer } from "mobx-react";
 import { useContext } from "react";
 import { Navigate } from "react-router-dom";
 import { AuthContext } from "./context/AuthContext";
+import userStore from "./store/UserStore";
 
-function RouteGuard({ children }) {
-  const { isLoggedIn, isLoading } = useContext(AuthContext);
-
+const RouteGuard = observer(({ children }) => {
+  const { isLoading } = useContext(AuthContext);
+  console.log(userStore.isLoggedIn, userStore.user)
   if (isLoading) {
     return <></>;
   }
 
-  if (!isLoggedIn) {
+  if (!userStore.isLoggedIn) {
     return <Navigate to="/sign-in" />;
   }
 
   return children; 
-}
+});
 
 export default RouteGuard;

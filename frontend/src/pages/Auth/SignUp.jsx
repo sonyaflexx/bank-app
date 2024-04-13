@@ -2,11 +2,13 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
+import { Navigate } from "react-router-dom";
 
 import { AuthContext } from "../../context/AuthContext";
 import AuthInput from "../../components/inputs/AuthInput";
 import Button from "../../components/buttons/Button";
 import Header from "../../components/Header";
+import userStore from "../../store/UserStore";
 
 export default function SignUp() {
     const { registration } = useContext(AuthContext);
@@ -20,8 +22,12 @@ export default function SignUp() {
             const response = await registration(data)
             navigate(`/sign-up/success/${encodeURIComponent(JSON.stringify(response))}`)
         } catch (e) {
-            alert('Непредвиденная ошибка!')
+            alert(e)
         }
+    }
+
+    if (userStore.isLoggedIn) {
+        return <Navigate to="/" />;
     }
 
     return (

@@ -14,8 +14,6 @@ import InternetPage from "./pages/Payments/InternetPage";
 import TaxesPage from "./pages/Payments/TaxesPage";
 import SuccessPage from "./pages/SuccessPage";
 import SuccessSignUp from "./pages/SuccessSignUp";
-import { useContext } from "react";
-
 
 export default function App() {
   return (
