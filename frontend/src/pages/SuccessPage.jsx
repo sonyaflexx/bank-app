@@ -44,7 +44,7 @@ export default function SuccessPage() {
                                     </div>
                                     <div className="flex gap-2">
                                         <p className="font-semibold">Сумма: </p>
-                                        <span>{parsedData.amount}₽</span>
+                                        <span>{formatMoney(parsedData.amount)}</span>
                                     </div>
                                 </>
                             }
@@ -69,7 +69,7 @@ export default function SuccessPage() {
                                     </div>
                                     <div className="flex gap-2">
                                         <p className="font-semibold">Сумма: </p>
-                                        <span>{parsedData.amount}₽</span>
+                                        <span>{formatMoney(parsedData.amount)}</span>
                                     </div>
                                 </>
                             }
@@ -94,7 +94,7 @@ export default function SuccessPage() {
                                     </div>
                                     <div className="flex gap-2">
                                         <p className="font-semibold">Сумма: </p>
-                                        <span>{parsedData.amount}₽</span>
+                                        <span>{formatMoney(parsedData.amount)}</span>
                                     </div>
                                 </>
                             }

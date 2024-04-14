@@ -37,6 +37,7 @@ export default function PaymentMobileForm(props) {
             if (error.response && error.response.status === 403) {
                 setVisibleAlert(true);
             }
+            alert(error)
         }
     };
     
