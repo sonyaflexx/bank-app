@@ -8,24 +8,35 @@ import Header from "./Header";
 import Button from "./buttons/Button";
 import MoneyInput from "./inputs/MoneyInput";
 
+import api from "../api";
+import userStore from "../store/UserStore";
+
 export default function PaymentInternetForm(props) {
     const navigate = useNavigate();
     const [ visibleAlert, setVisibleAlert ] = useState(false);
     const { control, register, handleSubmit, formState: { errors } } = useForm();
-
-    const balance = 1000; // TODO GET запрос на кол-во денег
-    
-    const onSubmit = data => {
-        if (balance >= parseInt(data.amountMoney.replace(/\s/g, ""))) {
+  
+    const onSubmit = async (data) => {
+        try {
             data.type = "internet";
             data.operator = props.operator
-            const dataStr = JSON.stringify(data);
-            navigate(`/success/${encodeURIComponent(dataStr)}`)
-            // TODO POST запрос на снятие 
-        } else {
-            setVisibleAlert(true);
+            data.sender_id = userStore.user.card_number;
+            let formattedData = {
+                ...data,
+                amount: parseFloat(data.amount.replaceAll(' ', ''))
+            };
+            
+            const response = await api.post('api/transaction/payments/internet', formattedData);
+
+            if (response.data.success) {
+                navigate(`/success/${encodeURIComponent(JSON.stringify(formattedData))}`);
+            } 
+        } catch (error) {
+            if (error.response && error.response.status === 403) {
+                setVisibleAlert(true);
+            }
         }
-    }
+    };
     
     return (
         <div className="relative flex items-center flex-col gap-1 bg-white w-full mx-20 pt-5 pb-8 rounded-2xl shadow-xl">

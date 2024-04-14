@@ -18,7 +18,7 @@ const User = sequelize.define('user', {
 const Transaction = sequelize.define('transaction', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     transaction_type: {type: DataTypes.STRING, allowNull: false},
-    service_type: {type: DataTypes.STRING, allowNull: true},
+    service_receiver_info: {type: DataTypes.STRING, allowNull: true},
     amount: {type: DataTypes.DECIMAL, allowNull: false},
 })
 

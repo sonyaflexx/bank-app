@@ -12,5 +12,5 @@ export default function formatMoney(number) {
     }
     formattedIntegerPart = integerPart + formattedIntegerPart;
     
-    return formattedIntegerPart + decimalPart + ' ₽';
+    return formattedIntegerPart + decimalPart + '₽';
 }

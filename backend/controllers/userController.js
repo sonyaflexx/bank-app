@@ -1,7 +1,8 @@
 const Error = require('../errors/Error')
-const { User } = require('../models/models')
+const { User, Transaction } = require('../models/models')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
+const { Op } = require("sequelize") 
 
 const generateToken = (card_number, firstname, lastname) => {
     return jwt.sign(
@@ -66,8 +67,30 @@ class UserController {
     }
     
 
-    async getHistory(req, res) {
+    async getHistory(req, res) {    
+        const { card_number } = req.query;
+        if (!card_number) {
+            return res.status(400).json({ error: "Неверный запрос" });
+        }
+        
+        try {
+            const history = await Transaction.findAll({
+                where: { 
+                    [Op.or]: [
+                        { sender_id: card_number },
+                        { receiver_id: card_number }
+                    ]
+                }
+            });            
+            if (history.length === 0) {
+                return res.status(404).json({ error: "История пуста" });
+            }
 
+            return res.status(200).json({ history });
+        } catch (error) {
+            console.error('Ошибка при запросе истории:', error);
+            return res.status(500).json({ error: "Внутренняя ошибка сервера" });
+        }
     }
 }
 

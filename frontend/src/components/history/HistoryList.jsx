@@ -1,61 +1,17 @@
+import { useEffect } from "react";
 import HistoryItem from "./HistoryItem";
 
-export default function HistoryList() {
-    const transfers = [ // TODO запрос на получение истории (массив объектов)
-        {
-            type: "outgoing",
-            to: "0000 0000 0000 0000",
-            amountMoney: "230"
-        },
-        {
-            type: "incoming",
-            to: "0000 0000 0000 0000",
-            amountMoney: "100 000"
-        },
-        {
-            type: "outgoing",
-            to: "0000 0000 0000 0000",
-            amountMoney: "230"
-        },
-        {
-            type: "incoming",
-            to: "0000 0000 0000 0000",
-            amountMoney: "10"
-        },
-        {
-            type: "outgoing",
-            to: "0000 0000 0000 0000",
-            amountMoney: "230"
-        },
-        {
-            type: "outgoing",
-            to: "0000 0000 0000 0000",
-            amountMoney: "230"
-        },
-        {
-            type: "outgoing",
-            to: "0000 0000 0000 0000",
-            amountMoney: "230"
-        },
-        {
-            type: "incoming",
-            to: "0000 0000 0000 0000",
-            amountMoney: "10"
-        },
-        {
-            type: "outgoing",
-            to: "0000 0000 0000 0000",
-            amountMoney: "230"
-        },
-    ];
-
+export default function HistoryList(props) {
     return (
         <div className="d max-h-96 overflow-y-auto pr-2">
-            {transfers.map((obj) =>
+            {props.transactions.map((obj) =>
                 <HistoryItem 
-                    type={obj.type}
-                    to={obj.to}
-                    amountMoney={obj.amountMoney}
+                    transaction_type={obj.transaction_type}
+                    from={obj.sender_id}
+                    to={obj.receiver_id}
+                    serviceInfo={obj.service_receiver_info}
+                    timestamp={obj.createdAt}
+                    amount={obj.amount}
                 />
             )}
         </div>

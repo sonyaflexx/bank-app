@@ -20,14 +20,29 @@ const getBalance = async () => {
     }
 }
 
+const getHistory = async () => {
+    try {
+        const card_number = userStore.user.card_number
+        const response = await api.get('api/user/history', { params: { card_number } });
+        return response.data.history;
+    } catch (error) {
+        console.error('Ошибка при запросе баланса:', error);
+        throw error;
+    }
+}
+
 export default function BalancePage() {
     const [balance, setBalance] = useState(0);
+    const [history, setHistory] = useState([])
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const { balance } = await getBalance();
+                const history = await getHistory();
+
                 setBalance(balance);
+                setHistory(history.reverse())
             } catch (error) {
                 console.error('Ошибка при запросе баланса:', error);
             }
@@ -49,7 +64,7 @@ export default function BalancePage() {
                         <span className="text-2xl"><GiBackwardTime /></span>
                         История переводов
                     </p>
-                    <HistoryList />
+                    <HistoryList transactions={history}/>
                 </div>
             </div>
         </div>

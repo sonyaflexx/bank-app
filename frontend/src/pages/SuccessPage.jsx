@@ -4,6 +4,8 @@ import { useSpring, animated } from 'react-spring';
 import { Link } from 'react-router-dom';
 
 import { useParams } from 'react-router-dom';
+import formatMoney from '../hooks/formatMoney'
+import formatCard from '../hooks/formatCard'
 
 // TODO отрефакторить
 
@@ -42,7 +44,7 @@ export default function SuccessPage() {
                                     </div>
                                     <div className="flex gap-2">
                                         <p className="font-semibold">Сумма: </p>
-                                        <span>{parsedData.amountMoney}₽</span>
+                                        <span>{parsedData.amount}₽</span>
                                     </div>
                                 </>
                             }
@@ -67,7 +69,7 @@ export default function SuccessPage() {
                                     </div>
                                     <div className="flex gap-2">
                                         <p className="font-semibold">Сумма: </p>
-                                        <span>{parsedData.amountMoney}₽</span>
+                                        <span>{parsedData.amount}₽</span>
                                     </div>
                                 </>
                             }
@@ -92,7 +94,7 @@ export default function SuccessPage() {
                                     </div>
                                     <div className="flex gap-2">
                                         <p className="font-semibold">Сумма: </p>
-                                        <span>{parsedData.amountMoney}₽</span>
+                                        <span>{parsedData.amount}₽</span>
                                     </div>
                                 </>
                             }
@@ -105,11 +107,11 @@ export default function SuccessPage() {
                                     </div>
                                     <div className="flex gap-2">
                                         <p className="font-semibold">Куда: </p>
-                                        <span>{parsedData.cardNumber}</span>
+                                        <span>{formatCard(parsedData.receiver_id)}</span>
                                     </div>
                                     <div className="flex gap-2">
                                         <p className="font-semibold">Сумма: </p>
-                                        <span>{parsedData.amountMoney}₽</span>
+                                        <span>{formatMoney(parsedData.amount)}</span>
                                     </div>
                                 </>
                             }
@@ -122,7 +124,7 @@ export default function SuccessPage() {
                                     </div>
                                     <div className="flex gap-2">
                                         <p className="font-semibold">Сумма: </p>
-                                        <span>{parsedData.amountMoney}₽</span>
+                                        <span>{formatMoney(parsedData.amount)}</span>
                                     </div>
                                 </>
                             }
@@ -135,7 +137,7 @@ export default function SuccessPage() {
                                     </div>
                                     <div className="flex gap-2">
                                         <p className="font-semibold">Сумма: </p>
-                                        <span>{parsedData.amountMoney}₽</span>
+                                        <span>{formatMoney(parsedData.amount)}</span>
                                     </div>
                                 </>
                             }

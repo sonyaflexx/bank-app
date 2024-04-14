@@ -9,28 +9,46 @@ import CardNumberInput from "../components/inputs/CardNumberInput";
 import BackButton from "../components/buttons/BackButton";
 import MoneyInput from "../components/inputs/MoneyInput"
 import { useNavigate } from "react-router-dom";
+import userStore from "../store/UserStore";
+import api from "../api";
 
 export default function TransferPage() {
     const navigate = useNavigate();
     const { handleSubmit, control, formState: { errors } } = useForm();
-    const [ visibleAlert, setVisibleAlert ] = useState(false);
-    const balance = 1000; // TODO GET запрос на кол-во денег
+    const [ visibleAlertBalance, setVisibleAlertBalance ] = useState(false);
+    const [ visibleAlertReceiver, setVisibleAlertReceiver ] = useState(false);
     
-    const onSubmit = data => {
-        if (balance >= parseInt(data.amountMoney.replace(/\s/g, ""))) {
+    const onSubmit = async (data) => {
+        try {
             data.type = "transfer";
-            const dataStr = JSON.stringify(data);
-            // TODO POST запрос на перевод
-            navigate(`/success/${encodeURIComponent(dataStr)}`)
-        } else {
-            setVisibleAlert(true);
-        }
+            data.sender_id = userStore.user.card_number;
+            let formattedData = {
+                ...data,
+                receiver_id: parseInt(data.card_number.replaceAll(' ', ''), 10),
+                amount: parseFloat(data.amount.replaceAll(' ', ''))
+            };
+            
+            const response = await api.post('api/transaction/transfer', formattedData);
 
-    }
+            if (response.data.success) {
+                navigate(`/success/${encodeURIComponent(JSON.stringify(formattedData))}`);
+            } 
+        } catch (error) {
+            if (error.response && error.response.status === 403) {
+                setVisibleAlertReceiver(false)
+                setVisibleAlertBalance(true);
+            }
+            if (error.response && error.response.status === 404) {
+                setVisibleAlertBalance(false);
+                setVisibleAlertReceiver(true)
+            }
+        }
+    };
 
     return (
         <div className=" relative flex items-center flex-col gap-1 bg-white w-full mx-20 pt-5 pb-8 rounded-2xl shadow-xl">
-            {visibleAlert && <Alert variant="filled" severity="error" className='fixed top-10'>Недостаточно средств.</Alert> }
+            {visibleAlertBalance && <Alert variant="filled" severity="error" className='fixed top-10'>Недостаточно средств</Alert> }
+            {visibleAlertReceiver && <Alert variant="filled" severity="error" className='fixed top-10'>Пользователя с такой картой не существует</Alert> }
             <Header title="Перевод средств" backHref="/" />
             <form 
                 onSubmit={handleSubmit(onSubmit)}

@@ -16,9 +16,14 @@ export default function DepositPage() {
         try {
             data.type = "deposit";
             data.receiver_id = userStore.user.card_number
-            const response = await api.post('api/transaction/deposit', data);
+            let formattedData = {
+                ...data,
+                amount: parseFloat(data.amount.replaceAll(' ', ''))
+            };
+            
+            const response = await api.post('api/transaction/deposit', formattedData);
             if (response.data.success) {
-                navigate(`/success/${encodeURIComponent(JSON.stringify(data))}`);
+                navigate(`/success/${encodeURIComponent(JSON.stringify(formattedData))}`);
             } else {
                 alert(response.data.error);
             }
@@ -35,7 +40,7 @@ export default function DepositPage() {
                 className="w-full px-12 flex flex-col items-center gap-7"
             >
                 <p className="font-medium">Введите сумму, на которую желаете пополнить счёт</p>
-                <MoneyInput control={control} error={errors.amountMoney} />
+                <MoneyInput control={control} error={errors.amount} />
                 <Button content="Пополнить"/>
             </form>
         </div>

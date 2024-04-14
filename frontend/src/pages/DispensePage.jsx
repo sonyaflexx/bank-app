@@ -10,24 +10,35 @@ import Button from "../components/buttons/Button";
 import MoneyInput from "../components/inputs/MoneyInput";
 import BackButton from "../components/buttons/BackButton";
 import Loading from "../components/Loading";
+import userStore from "../store/UserStore";
+import api from "../api";
 
 export default function DispensePage() {
     const navigate = useNavigate();
     const { control, handleSubmit, formState: { errors } } = useForm();
     const [ visibleAlert, setVisibleAlert ] = useState(false);
 
-    const balance = 1000; // TODO GET запрос на кол-во денег
-    
-    const onSubmit = data => {
-        if (balance >= parseInt(data.amountMoney.replace(/\s/g, ""))) {
+    const onSubmit = async (data) => {
+        try {
             data.type = "dispense";
-            const dataStr = JSON.stringify(data);
-            // TODO POST запрос на снятие 
-            navigate(`/success/${encodeURIComponent(dataStr)}`)
-        } else {
-            setVisibleAlert(true);
+            data.receiver_id = userStore.user.card_number;
+            let formattedData = {
+                ...data,
+                amount: parseFloat(data.amount.replaceAll(' ', ''))
+            };
+            
+            const response = await api.post('api/transaction/dispense', formattedData);
+
+            if (response.data.success) {
+                navigate(`/success/${encodeURIComponent(JSON.stringify(formattedData))}`);
+            } 
+        } catch (error) {
+            if (error.response && error.response.status === 403) {
+                setVisibleAlert(true);
+            }
         }
-    }
+    };
+    
     
     return (
         <div className="relative flex items-center flex-col gap-1 bg-white w-full mx-20 pt-5 pb-8 rounded-2xl shadow-xl">
