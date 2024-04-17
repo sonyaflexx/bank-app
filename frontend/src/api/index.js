@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const API_URL = "http://localhost:5000";
+export const API_URL = "https://bank-app-backend-7x3fwf0qx-sonyaflexxs-projects.vercel.app";
 
 const api = axios.create({
   withCredentials: true,
