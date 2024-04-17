@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 5000
 
 const app = express()
 app.use(cors({
-    origin: 'https://bank-app-frontend-8uupwreiy-sonyaflexxs-projects.vercel.app',
+    origin: 'https://bank-app-frontend-delta.vercel.app',
     credentials: true,
     methods: ["GET", "POST"]
 }))
